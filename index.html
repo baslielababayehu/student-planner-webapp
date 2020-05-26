@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Task List</title>
+  </head>
+
+  <body>
+    <!-- Top Jumbotron -->
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Homework Tracker</h1>
+        <p class="lead">
+          A simple way to track your homework.
+        </p>
+      </div>
+    </div>
+
+    <!-- Add a class -->
+    <div class="container">
+      <div class="card col-lg-12">
+        <div class="row">
+          <form class="add-a-class">
+            <div class="input-group m-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Add a class"
+                aria-label="Add a class"
+                aria-describedby="button-addon2"
+                id="class-form"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  id="add-a-class-btn"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your Classes -->
+
+    <div class="container mt-2 p-3">
+      <div class="card col-lg-12">
+        <div class="row text-center">
+          <p class="text-center pt-3 pl-2">Your Classes:</p>
+          <ul class="list-group list-group-horizontal-md m-2 class-list">
+            <!-- classes are added here -->
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main UI -->
+    <div class="container px-0 my-5">
+      <div class="row">
+        <div class="card col-lg-12 px-0">
+          <div class="card-header py-5 text-sentencecase">
+            <div class="heading">
+              <h1>Task</h1>
+            </div>
+            <div class="add-task w-75">
+              <form>
+                <div class="form">
+                  <label for="formGroupExampleInput">Add a new Task</label>
+                  <input
+                    type="text"
+                    class="form-control my-2"
+                    id="task-form"
+                    placeholder="New Task"
+                  />
+                </div>
+              </form>
+              <select class="custom-select" id="class-option-list">
+                <option selected value="0">Select a class</option>
+                <!-- classes options are updated here -->
+              </select>
+              <button
+                type="button"
+                class="btn btn-outline-danger my-2"
+                id="add-task"
+              >
+                Add Task
+              </button>
+            </div>
+            <div class="filter w-25 mt-4">
+              <form>
+                <div class="form">
+                  <label for="formGroupExampleInput">Filter Homework</label>
+                  <input
+                    type="text"
+                    class="form-control my-1"
+                    id="formGroupExampleInput"
+                    placeholder="Filter"
+                  />
+                  <button type="button" class="btn btn-dark my-2" id="filter">
+                    Filter
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <ul class="collection list-group list-group-flush">
+            <!-- The tasks will be added here -->
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // Get the current year for the copyright
+      $('#year').text(new Date().getFullYear());
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
