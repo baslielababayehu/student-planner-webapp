@@ -9,17 +9,19 @@ const deleteButton = document.querySelector('.delete-item');
 
 const classInput = document.querySelector('#class-form');
 const addClassButton = document.querySelector('#add-a-class-btn');
-const classList = document.querySelector('.class-list');
+const listOfClasses = document.querySelector('.class-list');
 
 const classOptionList = document.querySelector('#class-option-list');
+const removeClassButton = document.querySelector('#remove-classIcon');
 
 // load all event listeners
 loadEventListeners();
-// Load all event listeners
 function loadEventListeners() {
   addTaskButton.addEventListener('click', addTask);
   taskList.addEventListener('click', removeTask);
   addClassButton.addEventListener('click', addClass);
+  listOfClasses.addEventListener('click', removeSubjectFromList);
+  // classOptionList.addEventListener('click', removeSubjectFromOptionList);
 }
 
 //Add Class
@@ -35,15 +37,18 @@ function addClass(e) {
   btn.id = 'class-icon';
 
   const removeIcon = document.createElement('a');
+  removeIcon.className = 'remove-classIcon';
+  removeIcon.id = 'remove-classIcon';
   removeIcon.innerHTML = '<i class="fas fa-times ml-2"></i>';
 
-  btn.className = 'btn btn-dark';
+  btn.className = 'btn btn-dark currentClasses';
   li.appendChild(btn);
   li.appendChild(removeIcon);
   btn.appendChild(document.createTextNode(classInput.value));
-  classList.appendChild(li);
+  listOfClasses.appendChild(li);
 
   const addOption = document.createElement('option');
+  addOption.className = 'added-option';
   addOption.value = `${classInput.value}`;
   addOption.innerHTML = `${classInput.value}`;
 
@@ -52,7 +57,92 @@ function addClass(e) {
   e.preventDefault();
 }
 
-//Remove Class
+//Remove Class from List
+function removeSubjectFromList(e) {
+  if (e.target.parentElement.classList.contains('remove-classIcon')) {
+    e.target.parentElement.parentElement.remove();
+    removeSubjectFromOptionList();
+  }
+  e.preventDefault();
+}
+// remove class form options
+function removeSubjectFromOptionList() {
+  let classesToBeDeleted = document.querySelectorAll('.added-option');
+  let currentClassesAvailable = document.querySelectorAll('.currentClasses');
+  // classesToBeDeleted[1].remove();
+  // console.log(classesToBeDeleted[1]);
+
+  const currentClassesAvailableArray = [];
+  for (i = 0; i < currentClassesAvailable.length; i++) {
+    currentClassesAvailableArray.push(currentClassesAvailable[i].innerHTML);
+  }
+
+  const classesToBeDeletedArray = [];
+  for (i = 0; i < classesToBeDeleted.length; i++) {
+    classesToBeDeletedArray.push(classesToBeDeleted[i].innerHTML);
+  }
+
+  // classesToBeDeleted = classesToBeDeleted.innerHTML;
+  // currentClassesAvailable = currentClassesAvailable.innerHTML;
+
+  // console.log(currentClassesAvailableArray);
+
+  // const currentClassesAvailableArray = Array.apply(
+  //   null,
+  //   currentClassesAvailable
+  // );
+
+  // const classesToBeDeletedArray = Array.apply(null, classesToBeDeleted);
+
+  // console.log(currentClassesAvailableArray);
+
+  // for (let i = 0; i < classesToBeDeleted.length; i++) {
+  //   if (classesToBeDeleted[i].value != currentClassesAvailable[i].value) {
+  //     console.log(classesToBeDeleted[i]);
+  //   }
+  // }
+  // console.log(classesToBeDeleted[3]);
+  // console.log(currentClassesAvailable[3]);
+  // for (let i = 0; i < currentClassesAvailableArray.length; i++) {
+
+  //   if (
+  //     classesToBeDeleted[i] != currentClassesAvailable[0] &&
+  //     classesToBeDeleted[i] != currentClassesAvailable[1] &&
+  //     classesToBeDeleted[i] != currentClassesAvailable[2] &&
+  //     classesToBeDeleted[i] != currentClassesAvailable[3]
+  //   ) {
+  //     console.log(classesToBeDeleted[i]);
+  //     classesToBeDeleted[i].remove();
+  //   }
+
+  //   if (
+  //     currentClassesAvailableArray.some(
+  //       (i) => classesToBeDeletedArray.indexOf(i) >= 0
+  //     ) == true
+  //   ) {
+  //     // console.log(classesToBeDeleted[i]);
+  //     // classesToBeDeletedArray.splice(i, 1);
+  //     console.log(classesToBeDeleted[i]);
+  //     classesToBeDeleted[i].remove();
+  //   }
+  // }
+  // const found = currentClassesAvailableArray.some(
+  //   (i) => classesToBeDeletedArray.indexOf(i) >= 0
+  // );
+
+  // console.log(found);
+
+  // for (let i = 0; i < classesToBeDeleted.length; i++) {
+  //   for (let j = 0; j < currentClassesAvailable.length; j++) {
+  //     if (classesToBeDeleted[i].value != currentClassesAvailable[j].value) {
+  //       console.log(classesToBeDeleted[i]);
+  //       classesToBeDeleted[i].remove();
+  //     }
+  //   }
+  // }
+
+  // if (classToBeDeleted.classList.contains(""))
+}
 
 //Add Task
 function addTask(e) {
@@ -60,25 +150,20 @@ function addTask(e) {
     alert('Add a task');
     return 0;
   } else if (classOptionList.value === '0') {
-    alert('add a class');
+    alert('Add a class');
     return 0;
   }
 
-  //Create li element
   const li = document.createElement('li');
-  //Add class
   li.className = 'list-group-item';
   const para = document.createElement('p');
   para.className = 'the-added-task';
   const classIcon = document.querySelector('#class-icon');
+  const classIconCopy = classIcon.cloneNode(true);
 
   para.appendChild(document.createTextNode(taskInput.value + '     '));
-  para.appendChild(classIcon);
+  para.appendChild(classIconCopy);
   li.appendChild(para);
-
-  // Create text node and append to the li
-  // li.appendChild(document.createTextNode(taskInput.value + '     '));
-  //create new link element
 
   const link = document.createElement('a');
   link.className = 'delete-item';
@@ -90,10 +175,8 @@ function addTask(e) {
   e.preventDefault();
 }
 
+//remove task
 function removeTask(e) {
-  // const toBeDeleted = document.querySelector('.list-group-item');
-
-  // const strikeThroughItem = document.querySelector('.the-added-task');
   const iconIsClicked = e.target.parentElement.classList.contains(
     'delete-item'
   );
@@ -102,9 +185,5 @@ function removeTask(e) {
     confirm('are you sure');
     e.target.parentElement.parentElement.remove();
   }
-  // toBeDeleted.remove();
-
-  // innerHTML = `<p><del>${toBeDeleted}</del></p>`;
-
   e.preventDefault();
 }
