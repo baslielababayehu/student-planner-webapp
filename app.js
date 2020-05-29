@@ -2,7 +2,7 @@
 
 const form = document.querySelector('#task-form');
 const taskList = document.querySelector('.collection');
-const filter = document.querySelector('#filter');
+
 const taskInput = document.querySelector('#task-form');
 const addTaskButton = document.querySelector('#add-task');
 const deleteButton = document.querySelector('.delete-item');
@@ -14,14 +14,22 @@ const listOfClasses = document.querySelector('.class-list');
 const classOptionList = document.querySelector('#class-option-list');
 const removeClassButton = document.querySelector('#remove-classIcon');
 
+const filterButton = document.querySelector('#filter');
+
 // load all event listeners
 loadEventListeners();
 function loadEventListeners() {
   addTaskButton.addEventListener('click', addTask);
+
   taskList.addEventListener('click', removeTask);
+
   addClassButton.addEventListener('click', addClass);
+
   listOfClasses.addEventListener('click', removeSubjectFromList);
-  // classOptionList.addEventListener('click', removeSubjectFromOptionList);
+
+  filterButton.addEventListener('keyup', filterTasks);
+
+  listOfClasses.addEventListener('click', removeSubjectFromOptionList);
 }
 
 //Add Class
@@ -66,82 +74,19 @@ function removeSubjectFromList(e) {
   e.preventDefault();
 }
 // remove class form options
-function removeSubjectFromOptionList() {
-  let classesToBeDeleted = document.querySelectorAll('.added-option');
-  let currentClassesAvailable = document.querySelectorAll('.currentClasses');
-  // classesToBeDeleted[1].remove();
-  // console.log(classesToBeDeleted[1]);
+function removeSubjectFromOptionList(e) {
+  taskListText = e.target.parentElement.parentElement.firstChild.innerHTML;
+  const text = e.target.parentElement.innerHTML.toLowerCase();
+  console.log(taskListText);
 
-  const currentClassesAvailableArray = [];
-  for (i = 0; i < currentClassesAvailable.length; i++) {
-    currentClassesAvailableArray.push(currentClassesAvailable[i].innerHTML);
-  }
+  document.querySelectorAll('.added-option').forEach(function (i) {
+    item = i.value;
+    console.log(item);
 
-  const classesToBeDeletedArray = [];
-  for (i = 0; i < classesToBeDeleted.length; i++) {
-    classesToBeDeletedArray.push(classesToBeDeleted[i].innerHTML);
-  }
-
-  // classesToBeDeleted = classesToBeDeleted.innerHTML;
-  // currentClassesAvailable = currentClassesAvailable.innerHTML;
-
-  // console.log(currentClassesAvailableArray);
-
-  // const currentClassesAvailableArray = Array.apply(
-  //   null,
-  //   currentClassesAvailable
-  // );
-
-  // const classesToBeDeletedArray = Array.apply(null, classesToBeDeleted);
-
-  // console.log(currentClassesAvailableArray);
-
-  // for (let i = 0; i < classesToBeDeleted.length; i++) {
-  //   if (classesToBeDeleted[i].value != currentClassesAvailable[i].value) {
-  //     console.log(classesToBeDeleted[i]);
-  //   }
-  // }
-  // console.log(classesToBeDeleted[3]);
-  // console.log(currentClassesAvailable[3]);
-  // for (let i = 0; i < currentClassesAvailableArray.length; i++) {
-
-  //   if (
-  //     classesToBeDeleted[i] != currentClassesAvailable[0] &&
-  //     classesToBeDeleted[i] != currentClassesAvailable[1] &&
-  //     classesToBeDeleted[i] != currentClassesAvailable[2] &&
-  //     classesToBeDeleted[i] != currentClassesAvailable[3]
-  //   ) {
-  //     console.log(classesToBeDeleted[i]);
-  //     classesToBeDeleted[i].remove();
-  //   }
-
-  //   if (
-  //     currentClassesAvailableArray.some(
-  //       (i) => classesToBeDeletedArray.indexOf(i) >= 0
-  //     ) == true
-  //   ) {
-  //     // console.log(classesToBeDeleted[i]);
-  //     // classesToBeDeletedArray.splice(i, 1);
-  //     console.log(classesToBeDeleted[i]);
-  //     classesToBeDeleted[i].remove();
-  //   }
-  // }
-  // const found = currentClassesAvailableArray.some(
-  //   (i) => classesToBeDeletedArray.indexOf(i) >= 0
-  // );
-
-  // console.log(found);
-
-  // for (let i = 0; i < classesToBeDeleted.length; i++) {
-  //   for (let j = 0; j < currentClassesAvailable.length; j++) {
-  //     if (classesToBeDeleted[i].value != currentClassesAvailable[j].value) {
-  //       console.log(classesToBeDeleted[i]);
-  //       classesToBeDeleted[i].remove();
-  //     }
-  //   }
-  // }
-
-  // if (classToBeDeleted.classList.contains(""))
+    if (item.toLowerCase() === taskListText.toLowerCase()) {
+      i.remove();
+    }
+  });
 }
 
 //Add Task
@@ -186,4 +131,19 @@ function removeTask(e) {
     e.target.parentElement.parentElement.remove();
   }
   e.preventDefault();
+}
+
+function filterTasks(e) {
+  console.log(e.target);
+
+  const text = e.target.value.toLowerCase();
+  document.querySelectorAll('.the-added-task').forEach(function (task) {
+    const item = task.firstChild.textContent;
+
+    if (item.toLowerCase().indexOf(text) != -1) {
+      task.parentElement.style.display = 'block';
+    } else {
+      task.parentElement.style.display = 'none';
+    }
+  });
 }
